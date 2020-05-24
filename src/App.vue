@@ -1,32 +1,62 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <router-view></router-view>
+    <main-tab-bar></main-tab-bar>
   </div>
 </template>
 
+<script>
+import MainTabBar from "components/content/mainTabbar/MainTabBar";
+import { getHomeMultidata } from "network/home";
+
+export default {
+  name: "App",
+  components: {
+    MainTabBar,
+  },
+  data() {
+    return {
+      images: null,
+      msg: 123456,
+      musics: [
+        { id: 1, src: "MUSIC/西川貴教 - HOT LIMIT.mp3" },
+        { id: 2, src: "MUSIC/西川貴教 - INVOKE.mp3" },
+        { id: 3, src: "MUSIC/霄磊 - 叹郁孤.mp3" },
+        { id: 4, src: "MUSIC/澤野弘之 - BLAZE [ZERO-TWO Ver.].mp3" },
+        { id: 5, src: "MUSIC/澤野弘之 - DRAGON RISES.mp3" },
+      ],
+      curentIndex: 0,
+    };
+  },
+  methods: {
+    show() {
+      this.$message("element-ui");
+    },
+    changeMusic(index) {
+      this.curentIndex = index;
+    },
+  },
+  computed: {
+    getMusicSrc() {
+      return this.musics[this.curentIndex].src;
+    },
+  },
+  create() {
+    getHomeMultidata().then((res) => {
+      this.images = res;
+      console.log(1);
+      console.log(this.images);
+    });
+  },
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import url("./assets/css/base.css");
+span {
+  cursor: pointer;
 }
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.active {
+  background-color: blue;
 }
 </style>
