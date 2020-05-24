@@ -3,36 +3,32 @@
     <nav-bar class="home-nav">
       <div slot="center" v-html="msg"></div>
     </nav-bar>
-    <el-carousel indicator-position="outside" height="150px">
-      <el-carousel-item v-for="(item, key, i) in result" :key="key">
-        <div>
-          <img :src="result[key].g_img" alt />
-        </div>
-      </el-carousel-item>
-    </el-carousel>
+    <home-Swiper></home-Swiper>
   </div>
 </template>
 
 <script>
 import NavBar from "components/common/navbar/NavBar";
+import HomeSwiper from "./childrenComponents/HomeSwiper";
 import { getHomeMultidata } from "network/home";
 export default {
   name: "home",
   components: {
     NavBar,
+    HomeSwiper
   },
   data() {
     return {
       result: null,
-      msg: "购物车",
+      msg: "购物车"
     };
   },
   created() {
-    getHomeMultidata().then((res) => {
+    getHomeMultidata().then(res => {
       this.result = res;
       console.log(this.result);
     });
-  },
+  }
 };
 </script>
 
